@@ -9,4 +9,8 @@ mongoose.connect(process.env.DB_CONN, {
     if (err) throw err
     console.log('DB Connected successfuly.');
 
-})
+});
+
+let db = mongoose.connection;
+
+db.on('error', console.error.bind(console, 'MongoDB connection error'));

@@ -11,6 +11,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(bodyParser.json());
 
+app.use(require('./routes/index'));
+
 // app.get('/', (req, res) => {
 //     res.send('hola');
 // });
