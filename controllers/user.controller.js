@@ -21,6 +21,29 @@ exports.getUsers = (req, res) =>{
     })
 };
 
+exports.getUserById = (req, res) =>{
+
+    const id = req.params.id;
+
+    User.findById(id, (err, user) =>{
+        if (err) {
+            return res.json({
+                ok: false,
+                err: {
+                    msg: 'Could not find the user you are looking for'
+                }
+            });
+        }
+
+        res.json({
+            ok: true,
+            user
+        });
+
+    });
+
+};
+
 exports.createUser = (req, res) => {
     let body = req.body;
 
@@ -48,6 +71,36 @@ exports.createUser = (req, res) => {
 
     });
 };
+
+exports.createAdminUser = (req, res) => {
+
+    const body = req.body;
+
+    const user = new User({
+        name: body.name,
+        lastName: body.lastName,
+        email: body.email,
+        password: bcrypt.hashSync( body.password, 10 ),
+        role: body.role
+    })
+
+    user.save( (err, newAdminUser) =>{
+
+        if (err) {
+            return res.json({
+                ok: false,
+                err
+            });
+        }
+
+        res.json({
+            ok: true,
+            newAdminUser
+        });
+
+    });
+
+}
 
 exports.updateUser = (req, res) => {
     const id = req.params.id;

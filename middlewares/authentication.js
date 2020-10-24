@@ -22,6 +22,26 @@ const tokenVerify = (req, res, next) => {
 
 };
 
+const adminVerify = (req, res, next) => {
+
+    const adminRole = req.activeUser.role;
+
+    if ( adminRole != 'ADMIN_ROLE' ) {
+        return res.status(401).json({
+            ok: false,
+            err: {
+                msg: 'The current user in not allowed to do this action'
+            }
+        });
+
+        
+    }
+
+    next();
+
+}
+
 module.exports = {
-    tokenVerify
+    tokenVerify,
+    adminVerify
 }
